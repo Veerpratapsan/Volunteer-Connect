@@ -13,7 +13,7 @@ function resolveApiBaseUrl(): string {
     return base.endsWith('/api') ? base : `${base}/api`;
   }
   if (import.meta.env.DEV) return '/api';
-  return 'https://volunteer-backend-hpo8.onrender.com';
+  return 'https://volunteer-backend-hpo8.onrender.com/api';
 }
 
 export const api = axios.create({
