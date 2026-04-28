@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const TaskController_1 = require("../controllers/TaskController");
+const TaskService_1 = require("../services/TaskService");
+const TaskRepository_1 = require("../repositories/TaskRepository");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const asyncErrorWrapper_1 = require("../utils/asyncErrorWrapper");
+const router = (0, express_1.Router)();
+const taskRepository = new TaskRepository_1.TaskRepository();
+const taskService = new TaskService_1.TaskService(taskRepository);
+const taskController = new TaskController_1.TaskController(taskService);
+router.get('/', (0, asyncErrorWrapper_1.asyncErrorWrapper)((req, res) => taskController.getAll(req, res)));
+router.post('/', authMiddleware_1.requireAuth, (0, asyncErrorWrapper_1.asyncErrorWrapper)((req, res) => taskController.create(req, res)));
+exports.default = router;

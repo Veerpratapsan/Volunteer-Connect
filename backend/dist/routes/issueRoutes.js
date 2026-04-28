@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const IssueController_1 = require("../controllers/IssueController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const asyncErrorWrapper_1 = require("../utils/asyncErrorWrapper");
+const router = (0, express_1.Router)();
+const issueController = new IssueController_1.IssueController();
+router.post('/', authMiddleware_1.requireAuth, (0, asyncErrorWrapper_1.asyncErrorWrapper)((req, res) => issueController.createIssue(req, res)));
+router.get('/', (req, res) => issueController.getAllIssues(req, res));
+router.get('/:id', (req, res) => issueController.getIssueById(req, res));
+router.put('/:id', (req, res) => issueController.updateIssue(req, res));
+router.delete('/:id', (req, res) => issueController.deleteIssue(req, res));
+exports.default = router;
